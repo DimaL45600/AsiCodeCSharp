@@ -1,0 +1,226 @@
+1.  Частота встречаемости слов в тексте:
+
+Дана строка текста. Напишите программу, которая подсчитает, сколько раз каждое слово встречается в тексте. Для хранения слов и количества нужно использовать Словарь
+
+2. Обратная польская нотация (калькулятор):
+
+Реализуйте калькулятор, который принимает выражение в обратной польской записи (RPN: "3 4 + 2 * 7 /" = ((3 + 4) * 2) / 7) и вычисляет его результат с использованием стека.
+
+Нужно разобрать строку по пробелам с помощью метода Split и далее проверять каждый символ на число(можно использовать double.TryParse) если число то помещаем его в стек если символ то проводим операцию с данными из стека
+
+3. Симуляция круговой очереди (Round Robin):
+
+Реализуйте симуляцию алгоритма кругового планирования (Round Robin) для управления задачами. Каждой задаче выделяется фиксированное время процессора. Если задача не завершена за это время, она возвращается в конец очереди.
+
+Должна быть очередь которая состоит из обектов(Queue<(string task, int duration)>) в которых находиться название и длительность, также у нас должно быть определено ограничение по времени для каждой задачи. Методы не нужны только цикл для прохода по очереди! В каждом проходе нужно взять елемент из очереди проверять длительность и ограничение если длительность выше ограничения то время ограничения отнимаеться от обекта и он помещается обратно в очередь
+
+для симуляциии времени можно использовать Thread.Sleep(время в милисекундах);
+
+4(Необязательно просто для показа). Поиск кратчайшего пути между двумя вершинами графа.
+
+Можете попробовать поиск маршрутов и например вывести количество итераций для каждого метода поиска и сравнить их на одинаковых маршрутах.
+
+заготовка графа:
+
+Graph graph = new Graph();
+graph.AddVertex("Дніпро");
+graph.AddVertex("Харьков");
+graph.AddVertex("Запоріжжя");
+graph.AddVertex("Кривий ріг");
+graph.AddVertex("Київ");
+graph.AddVertex("Полтава");
+graph.AddVertex("Кременчуг");
+graph.AddVertex("Кропівницький");
+graph.AddVertex("Миколаїв");
+graph.AddVertex("Одесса");
+graph.AddVertex("Херсон");
+graph.AddVertex("Мелітополь");
+graph.AddVertex("Умань");
+graph.AddVertex("Вінниця");
+graph.AddVertex("Біла Церква");
+graph.AddVertex("Чернигів");
+graph.AddVertex("Корстень");
+graph.AddVertex("Житомир");
+graph.AddVertex("Хмельницький");
+graph.AddVertex("Ровно");
+graph.AddVertex("Тернопіль");
+graph.AddVertex("Кам'янець подільский");
+graph.AddVertex("Черновці");
+graph.AddVertex("Івано-Франківськ");
+graph.AddVertex("Луцьк");
+graph.AddVertex("Львів");
+
+graph.AddEdge("Дніпро", "Харьков");
+graph.AddEdge("Дніпро", "Запоріжжя");
+graph.AddEdge("Дніпро", "Кривий ріг");
+graph.AddEdge("Харьков", "Полтава");
+graph.AddEdge("Полтава", "Київ");
+graph.AddEdge("Полтава", "Кременчуг");
+graph.AddEdge("Кременчуг", "Кропівницький");
+graph.AddEdge("Кропівницький", "Миколаїв");
+graph.AddEdge("Миколаїв", "Одесса");
+graph.AddEdge("Миколаїв", "Херсон");
+graph.AddEdge("Херсон", "Мелітополь");
+graph.AddEdge("Запоріжжя", "Мелітополь");
+graph.AddEdge("Кропівницький", "Умань");
+graph.AddEdge("Одесса", "Умань");
+graph.AddEdge("Умань", "Вінниця");
+graph.AddEdge("Умань", "Біла Церква");
+graph.AddEdge("Київ", "Біла Церква");
+graph.AddEdge("Київ", "Чернигів");
+graph.AddEdge("Київ", "Корстень");
+graph.AddEdge("Київ", "Житомир");
+graph.AddEdge("Житомир", "Хмельницький");
+graph.AddEdge("Житомир", "Ровно");
+graph.AddEdge("Вінниця", "Хмельницький");
+graph.AddEdge("Хмельницький", "Ровно");
+graph.AddEdge("Хмельницький", "Тернопіль");
+graph.AddEdge("Хмельницький", "Кам'янець подільский");
+graph.AddEdge("Кам'янець подільский", "Черновці");
+graph.AddEdge("Черновці", "Івано-Франківськ");
+graph.AddEdge("Черновці", "Тернопіль");
+graph.AddEdge("Ровно", "Тернопіль");
+graph.AddEdge("Ровно", "Луцьк");
+graph.AddEdge("Корстень", "Луцьк");
+graph.AddEdge("Тернопіль", "Луцьк");
+graph.AddEdge("Івано-Франківськ", "Тернопіль");
+graph.AddEdge("Луцьк", "Львів");
+graph.AddEdge("Ровно", "Львів");
+graph.AddEdge("Тернопіль", "Львів");
+graph.AddEdge("Івано-Франківськ", "Львів");
+
+string start = "Дніпро";
+string end = "Львів";
+
+List<string> shortestPath = graph.FindShortestPath(start, end);
+
+if (shortestPath != null)
+{
+    Console.WriteLine($"Кратчайший путь от {start} до {end}:");
+    Console.WriteLine(string.Join(" -> ", shortestPath));
+}
+else
+{
+    Console.WriteLine($"Путь от {start} до {end} не найден.");
+}
+
+List<string> dfsPath = graph.DepthFirstSearch(start, end);
+
+if (dfsPath != null)
+{
+    Console.WriteLine($"Путь найден: {string.Join(" -> ", dfsPath)}");
+}
+else
+{
+    Console.WriteLine($"Путь от {start} до {end} не найден.");
+}
+
+
+
+Готовый класс для графа:
+
+
+
+public class Graph
+{
+    private Dictionary<string, List<string>> adjacencyList;
+
+    public Graph()
+    {
+        adjacencyList = new Dictionary<string, List<string>>();
+    }
+
+    // Добавление вершины
+    public void AddVertex(string vertex)
+    {
+        if (!adjacencyList.ContainsKey(vertex))
+        {
+            adjacencyList[vertex] = new List<string>();
+        }
+    }
+
+    // Добавление ребра
+    public void AddEdge(string vertex1, string vertex2)
+    {
+        if (adjacencyList.ContainsKey(vertex1) && adjacencyList.ContainsKey(vertex2))
+        {
+            adjacencyList[vertex1].Add(vertex2);
+            adjacencyList[vertex2].Add(vertex1);  // Для ненаправленного графа
+        }
+    }
+
+    // Алгоритм BFS для поиска кратчайшего пути
+    public List<string> FindShortestPath(string start, string end)
+    {
+        if (!adjacencyList.ContainsKey(start) || !adjacencyList.ContainsKey(end))
+        {
+            return null; // Если вершина не существует в графе
+        }
+
+        Queue<List<string>> queue = new Queue<List<string>>();
+        HashSet<string> visited = new HashSet<string>();
+
+        queue.Enqueue(new List<string> { start });
+        visited.Add(start);
+
+        while (queue.Count > 0)
+        {
+            List<string> path = queue.Dequeue();
+            string current = path[^1]; // Последний элемент в пути
+
+            if (current == end)
+            {
+                return path; // Кратчайший путь найден
+            }
+
+            foreach (var neighbor in adjacencyList[current])
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    visited.Add(neighbor);
+                    List<string> newPath = new List<string>(path) { neighbor };
+                    queue.Enqueue(newPath);
+                }
+            }
+        }
+
+        return null; // Пути нет
+    }
+    // Алгоритм DFS(поиск в глубину) для поиска пути
+    public List<string> DepthFirstSearch(string start, string end)
+    {
+        if (!adjacencyList.ContainsKey(start) || !adjacencyList.ContainsKey(end))
+        {
+            return null; // Если одна из вершин не существует в графе
+        }
+
+        Stack<List<string>> stack = new Stack<List<string>>();
+        HashSet<string> visited = new HashSet<string>();
+
+        stack.Push(new List<string> { start });
+        visited.Add(start);
+
+        while (stack.Count > 0)
+        {
+            List<string> path = stack.Pop();
+            string current = path[^1]; // Последний элемент в пути
+
+            if (current == end)
+            {
+                return path; // Путь найден
+            }
+
+            foreach (var neighbor in adjacencyList[current])
+            {
+                if (!visited.Contains(neighbor))
+                {
+                    visited.Add(neighbor);
+                    List<string> newPath = new List<string>(path) { neighbor };
+                    stack.Push(newPath);
+                }
+            }
+        }
+
+        return null; // Пути нет
+    }
+}
