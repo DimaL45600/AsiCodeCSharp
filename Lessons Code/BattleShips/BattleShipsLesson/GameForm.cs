@@ -14,11 +14,12 @@ namespace BattleShipsLesson
     {
         private bool gameStatus = false;
         private bool prepairStage = true;
-        private bool enemyStatus = false;
+        private bool enemyReady = false;
         private bool turnStatus = false;
         private byte[,] PlayerFieldData = new byte[10, 10];
         private List<Ship> PlayerShips = new List<Ship>();
         private byte[,] EnemyFieldData = new byte[10, 10];
+        private List<Ship> EnemyShips = new List<Ship>();
         private int selectedShip = 1;
         private RadioButton selectedRadio;
 
@@ -34,9 +35,8 @@ namespace BattleShipsLesson
             selectedRadio = ShipR1;
             if (MenuForm.connectionData.IsHost) IsHostLabel.Text = "Host";
             else IsHostLabel.Text = "Client";
-            MenuForm.connectionData.OnMessageReceived += MessageReceived;
-            MenuForm.connectionData.OnAnotherDisconect += PlayerDisconnected;
-
+            MenuForm.connectionData.OnMessageReceived += MessegeRecived;
+            MenuForm.connectionData.OnClientDisconnected += PlayerDisconected;
         }
 
         private void GameForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -224,43 +224,20 @@ namespace BattleShipsLesson
             ReadyButton.Text = "Waiting for other player!";
             ReadyButton.Enabled = false;
             prepairStage = false;
-            MenuForm.connectionData.SendMessage("ready");
+            MenuForm.connectionData.SendMessage("Ready");
         }
-
-        private void EnemyField_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
-        {
-            int cellData = EnemyFieldData[e.Row, e.Column];
-            if (cellData == 1)
-            {
-                e.Graphics.FillRectangle(Brushes.Red, e.CellBounds);
-            }
-            if (cellData == 2)
-            {
-                e.Graphics.FillRectangle(Brushes.Gray, e.CellBounds);
-            }
-        }
-
-        private void EnemyField_MouseClick(object sender, MouseEventArgs e)
-        {
-            if(gameStatus && turnStatus)
-            {
-                var cell = GetCellFromMouse(EnemyField, e.Location);
-                MenuForm.connectionData.SendMessage($"shoot:{cell.Y},{cell.X}");
-                turnStatus = false;
-            }
-        }
-        private void MessageReceived(string message)
+        private void MessegeRecived(string message)
         {
             Invoke((Action)(() =>
             {
-                if (message.Contains("ready"))
+                if (message == "Ready")
                 {
-                    enemyStatus = true;
-                    label4.Visible = true;
-                    if(!prepairStage && enemyStatus)
+                    enemyReady = true;
+                    label3.Visible = true;
+                    if (!prepairStage && enemyReady)
                     {
                         Random random = new Random();
-                        if(random.Next(0,1) == 0)
+                        if (random.Next(0, 1) == 0)
                         {
                             turnStatus = false;
                             MenuForm.connectionData.SendMessage("turn:1");
@@ -309,20 +286,14 @@ namespace BattleShipsLesson
                         else
                         {
                             turnStatus = true;
-                            label3.Text = "Your turn";
+                            TurnLabel.Text = "Your turn";
                             MenuForm.connectionData.SendMessage($"miss:{hit.Y},{hit.X}");
                         }
                         PlayerFieldData[hit.Y, hit.X] = 5;
                         PlayerField.Invalidate();
                     }
-                    if (message.Contains("miss"))
+                    if (message.Contains("hit"))
                     {
-                        Point hit = new Point(Convert.ToInt32(message.Split(':', ',')[2]), Convert.ToInt32(message.Split(':', ',')[1]));
-                        EnemyFieldData[hit.Y, hit.X] = 2;
-                        label3.Text = "Enemy turn";
-                        EnemyField.Invalidate();
-                    }
-                    if (message.Contains("hit")){
                         Point hit = new Point(Convert.ToInt32(message.Split(':', ',')[2]), Convert.ToInt32(message.Split(':', ',')[1]));
                         int[] enemyShips = new int[4];
                         enemyShips[0] = Convert.ToInt32(message.Split(':', ',')[3]);
@@ -338,26 +309,56 @@ namespace BattleShipsLesson
                         if (enemyShips[0] == 0 && enemyShips[1] == 0 && enemyShips[2] == 0 && enemyShips[3] == 0)
                         {
                             gameStatus = false;
-                            MessageBox.Show("You Win");
+                            MessageBox.Show("You win");
                             MenuForm.connectionData.Disconnect();
                         }
+                        EnemyField.Invalidate();
+                    }
+                    if (message.Contains("miss"))
+                    {
+                        Point hit = new Point(Convert.ToInt32(message.Split(':', ',')[2]), Convert.ToInt32(message.Split(':', ',')[1]));
+                        EnemyFieldData[hit.Y, hit.X] = 2;
+                        TurnLabel.Text = "Enemy turn";
                         EnemyField.Invalidate();
                     }
                 }
             }));
         }
-        private void PlayerDisconnected()
+        private void PlayerDisconected()
         {
-            MessageBox.Show("Enemy disconnected");
+            MessageBox.Show("Enemy disconected");
             this.Close();
         }
         private void StartGame()
         {
             gameStatus = true;
             ReadyButton.Visible = false;
-            label4.Visible=false;
-            label3.Visible=true;
-            label3.Text = turnStatus ? "Your turn" : "Enemy turn";
+            label3.Visible = false;
+            TurnLabel.Visible = true;
+            TurnLabel.Text = turnStatus ? "Your turn" : "Enemy turn";
+        }
+
+        private void EnemyField_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
+        {
+            int cellData = EnemyFieldData[e.Row, e.Column];
+            if (cellData == 1)
+            {
+                e.Graphics.FillRectangle(Brushes.Red, e.CellBounds);
+            }
+            if (cellData == 2)
+            {
+                e.Graphics.FillRectangle(Brushes.Gray, e.CellBounds);
+            }
+        }
+
+        private void EnemyField_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (gameStatus && turnStatus)
+            {
+                var cell = GetCellFromMouse(EnemyField, e.Location);
+                MenuForm.connectionData.SendMessage($"shoot:{cell.Y},{cell.X}");
+                turnStatus = false;
+            }
         }
     }
 }

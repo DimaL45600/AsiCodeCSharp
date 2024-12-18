@@ -42,15 +42,15 @@
             ReadyButton = new Button();
             IsHostLabel = new Label();
             label3 = new Label();
-            player1label = new Label();
-            player2label = new Label();
-            player3label = new Label();
+            TurnLabel = new Label();
             player4label = new Label();
+            player3label = new Label();
+            player2label = new Label();
+            player1label = new Label();
             enemy1Label = new Label();
             enemy2Label = new Label();
             enemy3Label = new Label();
             enemy4Label = new Label();
-            label4 = new Label();
             PrepairBox.SuspendLayout();
             SuspendLayout();
             // 
@@ -234,111 +234,110 @@
             // 
             // IsHostLabel
             // 
-            IsHostLabel.AutoSize = true;
-            IsHostLabel.Location = new Point(436, 17);
+            IsHostLabel.Location = new Point(280, 15);
             IsHostLabel.Name = "IsHostLabel";
-            IsHostLabel.Size = new Size(38, 15);
+            IsHostLabel.Size = new Size(352, 23);
             IsHostLabel.TabIndex = 6;
             IsHostLabel.Text = "label3";
+            IsHostLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // label3
             // 
-            label3.Location = new Point(280, 35);
+            label3.AutoSize = true;
+            label3.Location = new Point(814, 15);
             label3.Name = "label3";
-            label3.Size = new Size(352, 23);
+            label3.Size = new Size(39, 15);
             label3.TabIndex = 7;
-            label3.Text = "Turn";
-            label3.TextAlign = ContentAlignment.MiddleCenter;
+            label3.Text = "Ready";
             label3.Visible = false;
             // 
-            // player1label
+            // TurnLabel
             // 
-            player1label.AutoSize = true;
-            player1label.Location = new Point(280, 117);
-            player1label.Name = "player1label";
-            player1label.Size = new Size(71, 15);
-            player1label.TabIndex = 16;
-            player1label.Text = "Player(1) : 4 ";
-            // 
-            // player2label
-            // 
-            player2label.AutoSize = true;
-            player2label.Location = new Point(280, 102);
-            player2label.Name = "player2label";
-            player2label.Size = new Size(68, 15);
-            player2label.TabIndex = 15;
-            player2label.Text = "Player(2) : 3";
-            // 
-            // player3label
-            // 
-            player3label.AutoSize = true;
-            player3label.Location = new Point(280, 87);
-            player3label.Name = "player3label";
-            player3label.Size = new Size(68, 15);
-            player3label.TabIndex = 14;
-            player3label.Text = "Player(3) : 2";
+            TurnLabel.Location = new Point(280, 39);
+            TurnLabel.Name = "TurnLabel";
+            TurnLabel.Size = new Size(352, 23);
+            TurnLabel.TabIndex = 8;
+            TurnLabel.Text = "Turn";
+            TurnLabel.TextAlign = ContentAlignment.MiddleCenter;
+            TurnLabel.Visible = false;
             // 
             // player4label
             // 
             player4label.AutoSize = true;
-            player4label.Location = new Point(280, 72);
+            player4label.Location = new Point(280, 61);
             player4label.Name = "player4label";
             player4label.Size = new Size(68, 15);
-            player4label.TabIndex = 13;
+            player4label.TabIndex = 9;
             player4label.Text = "Player(4) : 1";
+            // 
+            // player3label
+            // 
+            player3label.AutoSize = true;
+            player3label.Location = new Point(280, 76);
+            player3label.Name = "player3label";
+            player3label.Size = new Size(68, 15);
+            player3label.TabIndex = 10;
+            player3label.Text = "Player(3) : 2";
+            // 
+            // player2label
+            // 
+            player2label.AutoSize = true;
+            player2label.Location = new Point(280, 91);
+            player2label.Name = "player2label";
+            player2label.Size = new Size(68, 15);
+            player2label.TabIndex = 11;
+            player2label.Text = "Player(2) : 3";
+            // 
+            // player1label
+            // 
+            player1label.AutoSize = true;
+            player1label.Location = new Point(280, 106);
+            player1label.Name = "player1label";
+            player1label.Size = new Size(71, 15);
+            player1label.TabIndex = 12;
+            player1label.Text = "Player(1) : 4 ";
             // 
             // enemy1Label
             // 
             enemy1Label.AutoSize = true;
-            enemy1Label.Location = new Point(560, 117);
+            enemy1Label.Location = new Point(564, 106);
             enemy1Label.Name = "enemy1Label";
             enemy1Label.Size = new Size(75, 15);
-            enemy1Label.TabIndex = 20;
+            enemy1Label.TabIndex = 16;
             enemy1Label.Text = "Enemy(1) : 4 ";
             // 
             // enemy2Label
             // 
             enemy2Label.AutoSize = true;
-            enemy2Label.Location = new Point(560, 102);
+            enemy2Label.Location = new Point(564, 91);
             enemy2Label.Name = "enemy2Label";
             enemy2Label.Size = new Size(72, 15);
-            enemy2Label.TabIndex = 19;
+            enemy2Label.TabIndex = 15;
             enemy2Label.Text = "Enemy(2) : 3";
             // 
             // enemy3Label
             // 
             enemy3Label.AutoSize = true;
-            enemy3Label.Location = new Point(560, 87);
+            enemy3Label.Location = new Point(564, 76);
             enemy3Label.Name = "enemy3Label";
             enemy3Label.Size = new Size(72, 15);
-            enemy3Label.TabIndex = 18;
+            enemy3Label.TabIndex = 14;
             enemy3Label.Text = "Enemy(3) : 2";
             // 
             // enemy4Label
             // 
             enemy4Label.AutoSize = true;
-            enemy4Label.Location = new Point(560, 72);
+            enemy4Label.Location = new Point(564, 61);
             enemy4Label.Name = "enemy4Label";
             enemy4Label.Size = new Size(72, 15);
-            enemy4Label.TabIndex = 17;
+            enemy4Label.TabIndex = 13;
             enemy4Label.Text = "Enemy(4) : 1";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(817, 17);
-            label4.Name = "label4";
-            label4.Size = new Size(39, 15);
-            label4.TabIndex = 21;
-            label4.Text = "Ready";
-            label4.Visible = false;
             // 
             // GameForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(912, 554);
-            Controls.Add(label4);
             Controls.Add(enemy1Label);
             Controls.Add(enemy2Label);
             Controls.Add(enemy3Label);
@@ -347,6 +346,7 @@
             Controls.Add(player2label);
             Controls.Add(player3label);
             Controls.Add(player4label);
+            Controls.Add(TurnLabel);
             Controls.Add(label3);
             Controls.Add(IsHostLabel);
             Controls.Add(ReadyButton);
@@ -380,14 +380,14 @@
         private Button ReadyButton;
         private Label IsHostLabel;
         private Label label3;
-        private Label player1label;
-        private Label player2label;
-        private Label player3label;
+        private Label TurnLabel;
         private Label player4label;
+        private Label player3label;
+        private Label player2label;
+        private Label player1label;
         private Label enemy1Label;
         private Label enemy2Label;
         private Label enemy3Label;
         private Label enemy4Label;
-        private Label label4;
     }
 }
